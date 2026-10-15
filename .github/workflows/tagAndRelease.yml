@@ -11,6 +11,10 @@ concurrency:
 
 jobs:
   tag:
+    # No registry variables, no release. They are unset on this repo, so the
+    # upstream workflow would fail at its registry check on every push to
+    # main. Skip instead — this turns itself on the day the variables exist.
+    if: vars.REFERENCE_REGISTRY != '' && vars.RELEASE_REGISTRY != ''
     uses: Start9Labs/start-technologies/.github/workflows/tagAndRelease.yml@master
     with:
       REFERENCE_REGISTRY: ${{ vars.REFERENCE_REGISTRY }}
